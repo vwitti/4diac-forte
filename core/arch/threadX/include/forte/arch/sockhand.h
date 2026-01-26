@@ -21,7 +21,7 @@
 
 // NetX Duo (BSD compatibility layer)
 #include <nx_api.h>
-#include <nx_bsd.h>
+#include <nxd_bsd.h>
 
 // Avoid symbol clashes with C++17 std::bind and potential connect macros
 #ifdef bind

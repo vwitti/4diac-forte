@@ -39,6 +39,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 
 #ifdef VXWORKS
 #define tanf(x) static_cast<TForteFloat>(tan(x))

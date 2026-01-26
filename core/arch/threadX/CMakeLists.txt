@@ -18,14 +18,19 @@
 forte_register_architecture(ThreadXNetXDuo)
 
 # Why setting pathes does not work ?
-set(FORTE_FREERTOS_INCLUDE_DIR "/storage/customer/tibacon/repos/git/ASG-EVO/libraries//Middlewares/ST/threadx/common/inc" CACHE PATH "Path to FreeRTOS include files (leave empty for installed source code)")
-if (FORTE_FREERTOS_INCLUDE_DIR)
+#set(FORTE_FREERTOS_INCLUDE_DIR "/storage/customer/tibacon/repos/git/ASG-EVO/libraries//Middlewares/ST/threadx/common/inc" CACHE PATH "Path to FreeRTOS include files (leave empty for installed source code)")
+#if (FORTE_FREERTOS_INCLUDE_DIR)
     target_include_directories(
             forte-core
             PUBLIC
-            "${FORTE_FREERTOS_INCLUDE_DIR}"
+            	~/tiefenbach/repos/git/ASG-EVO/libraries/Middlewares/ST/threadx/common/inc
+    ~/tiefenbach/repos/git/ASG-EVO/libraries/Middlewares/ST/threadx/ports/cortex_m55/gnu/inc
+            ~/tiefenbach/repos/git/ASG-EVO/libraries/Middlewares/ST/netxduo/common/inc
+            ~/tiefenbach/repos/git/ASG-EVO/libraries/Middlewares/ST/netxduo/addons/BSD
+            ~/tiefenbach/repos/git/ASG-EVO/libraries/Middlewares/ST/netxduo/ports/cortex_m55/gnu/inc
+            #"${FORTE_FREERTOS_INCLUDE_DIR}"
     )
-endif ()
+#endif ()
 
 option(FORTE_FREERTOS_PLUS_TCP "Use FreeRTOS-plus-TCP" OFF)
 target_compile_definitions(forte-core PUBLIC $<$<BOOL:${FORTE_FREERTOS_PLUS_TCP}>:FORTE_FREERTOS_PLUS_TCP>)
