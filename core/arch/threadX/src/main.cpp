@@ -10,42 +10,56 @@
  * Milan Vathoopan, Guru Chandrasekhara - initial API and implementation and/or initial documentation
  ************************************************************************************/
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
+#include "tx_api.h"
 
 #include "../c_interface/forte_c.h"
+
+#define STACK_SIZE		2000
+
+static TX_THREAD tx_forte_thread;
+static char tx_forte_thread_stack[STACK_SIZE];
 
 namespace {
   const unsigned forteTaskPriority = tskIDLE_PRIORITY + 1;
   const unsigned int desiredFortePort = 61499;
-  const configSTACK_DEPTH_TYPE stackDepth = 2000;
+  const configSTACK_DEPTH_TYPE stackDepth = STACK_SIZE;
 } // namespace
 
 void vForteTask(void *) {
   TForteInstance forteInstance;
 
   if (auto result = CForteArchitecture::initialize(0, NULL); result != 0) {
-    vTaskDelete(nullptr);
+	  tx_thread_delete(&tx_forte_thread);
   }
 
   if (auto result = forteStartInstance(desiredFortePort, &forteInstance); result != FORTE_OK) {
-    vTaskDelete(nullptr);
+	  tx_thread_delete(&tx_forte_thread);
   }
 
   forteWaitForInstanceToStop(forteInstance);
 
-  vTaskDelete(nullptr);
+  tx_thread_delete(&tx_forte_thread);
 }
 
-int main() {
+/* Assumes that schedule is already started tx_kernel_enter(); and we are somewhere in a task context */
+int main_forte() {
 
   if (auto result = forteGlobalInitialize(0, nullptr); result != FORTE_OK) {
     return result;
   }
 
-  xTaskCreate(vForteTask, "forte", stackDepth, nullptr, forteTaskPriority, nullptr);
+  UINT ret;
 
-  vTaskStartScheduler();
+  ret = tx_thread_create(tx_forte_thread,
+			"FORTE_THREAD",
+			vForteTask,
+			0,
+			tx_forte_thread_stack,
+			STACK_SIZE,
+			5,         //priority,
+			5,         //preempt_threshold,
+			20,        //time_slice,
+			TX_AUTO_START);
 
   // Will not get here unless there is insufficient RAM.
 }
