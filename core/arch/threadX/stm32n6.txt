@@ -79,6 +79,8 @@ DEPS=-openpowerlink
 DEPS=-paho.mqtt.c
 DEPS=-open62541
 DEPS=-libmodbus
+DEPS=-tinyxml
+DEPS=-basex
 
 //////////////////////////////////////////////////////////////////////////////
 // Overall 4diac-FORTE configuration -- Options with special handling.      //
@@ -97,6 +99,11 @@ DEPS=-libmodbus
 
 // Example: enable TSN com layer but disable SER
 //COM=TSN,-SER
+COM=-OPC_UA
+COM=-MODBUS
+COM=-PAHOMQTT
+COM=-XQUERYCLIENT
+COM=-HTTP
 
 //////////////////////////////////////////////////////////////////////////////
 // IO and IO_PROCESS: configure enabled FORTE IO modules

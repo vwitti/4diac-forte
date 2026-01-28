@@ -14,10 +14,14 @@
 
 #pragma once
 
-#include <errno.h>
+//#include <errno.h>
 #include <string.h>
 
 #include "forte/util/devlog.h"
+
+#define close soc_close
+//#define __SES_ARM
+#define __CCRX__
 
 // NetX Duo (BSD compatibility layer)
 #include <nx_api.h>

@@ -10,7 +10,6 @@
  * Contributors:
  *    Martin Erich Jobst - initial implementation
  *******************************************************************************/
-
 #include "forte/stringid.h"
 
 #include <deque>
