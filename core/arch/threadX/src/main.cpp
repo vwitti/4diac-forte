@@ -14,21 +14,23 @@
 
 #include "../c_interface/forte_c.h"
 
+
+CHAR thread_name[] = "FORTE_THREAD";
 #define STACK_SIZE		2000
 
 static TX_THREAD tx_forte_thread;
 static char tx_forte_thread_stack[STACK_SIZE];
 
 namespace {
-  const unsigned forteTaskPriority = tskIDLE_PRIORITY + 1;
+  const unsigned forteTaskPriority = 5;
   const unsigned int desiredFortePort = 61499;
   const configSTACK_DEPTH_TYPE stackDepth = STACK_SIZE;
 } // namespace
 
-void vForteTask(void *) {
+void vForteTask(uint32_t arg) {
   TForteInstance forteInstance;
 
-  if (auto result = CForteArchitecture::initialize(0, NULL); result != 0) {
+  if (auto result = forte::arch::CForteArchitecture::initialize(0, NULL); result != 0) {
 	  tx_thread_delete(&tx_forte_thread);
   }
 
@@ -50,8 +52,8 @@ int main_forte() {
 
   UINT ret;
 
-  ret = tx_thread_create(tx_forte_thread,
-			"FORTE_THREAD",
+  ret = tx_thread_create(&tx_forte_thread,
+		    thread_name,
 			vForteTask,
 			0,
 			tx_forte_thread_stack,
@@ -62,4 +64,5 @@ int main_forte() {
 			TX_AUTO_START);
 
   // Will not get here unless there is insufficient RAM.
+  return ret;
 }
