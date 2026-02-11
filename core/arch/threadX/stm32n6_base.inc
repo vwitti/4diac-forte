@@ -37,7 +37,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // CMAKE_BUILD_TYPE: specify build type for all packages, including
 // dependencies: Values: Debug, Release, RelWithDebInfo, MinSizeRel
-CMAKE_BUILD_TYPE=MinSizeRel
+//CMAKE_BUILD_TYPE=MinSizeRel
 // Example: release build
 //CMAKE_BUILD_TYPE=Release
 // Example: debug build
@@ -124,7 +124,7 @@ COM=-HTTP
 //TOOLCHAIN_EXTRA_ASM_FLAGS:STRING=
 
 //Extra flags to pass to all C/C++ compiler invocations
-//TOOLCHAIN_EXTRA_C_FLAGS:STRING=
+TOOLCHAIN_EXTRA_C_FLAGS:STRING=-mcmse -mcpu=cortex-m55 -mfpu=fpv5-d16
 
 //Extra flags to pass to all linker invocations
 //TOOLCHAIN_EXTRA_LINKER_FLAGS:STRING=

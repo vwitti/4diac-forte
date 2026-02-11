@@ -37,9 +37,9 @@
 //////////////////////////////////////////////////////////////////////////////
 // CMAKE_BUILD_TYPE: specify build type for all packages, including
 // dependencies: Values: Debug, Release, RelWithDebInfo, MinSizeRel
-CMAKE_BUILD_TYPE=MinSizeRel
+//CMAKE_BUILD_TYPE=MinSizeRel
 // Example: release build
-//CMAKE_BUILD_TYPE=Release
+CMAKE_BUILD_TYPE=Release
 // Example: debug build
 //CMAKE_BUILD_TYPE=Debug
 
